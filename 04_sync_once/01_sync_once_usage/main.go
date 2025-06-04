@@ -14,7 +14,7 @@ func main() {
 		go func() {
 			defer wg.Done()
 
-			once.Do(nonIdempotentClose)
+			once.Do(loadConfig)
 		}()
 	}
 
@@ -28,7 +28,7 @@ func main() {
 var isCalled atomic.Bool
 
 // not pure function
-func nonIdempotentClose() {
+func loadConfig() {
 	if isCalled.Load() {
 		panic("invariant error")
 	}
